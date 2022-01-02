@@ -164,11 +164,11 @@ headers = {
     "Modo Alerta2": " ",
     "PreAlerta2": " ",
     "PreAlerta Mensaje2": " ",
-    "Tipo PreAlerta2": " ",
+    "Tipo PreAlerta3": " ",
     "Modo Alerta3": " ",
     "PreAlerta3": " ",
     "PreAlerta Mensaje3": " ",
-    "Tipo PreAlerta3": " ",
+    "Tipo PreAlerta4": " ",
     "Modo Alerta4": " ",
     "PreAlerta4": " ",
     "PreAlerta Mensaje4": " ",
@@ -450,7 +450,7 @@ def addNewColumns(df: pd.DataFrame):
     df.insert(80, "quantity-to-ship", quantityDF)
     df = df.rename(
         columns={
-            "Tipo PreAlerta1": " ",
+            "Tipo PreAlerta1": "Tipo PreAlerta",
             "Modo Alerta1": "Modo Alerta",
             "PreAlerta1": "PreAlerta",
             "PreAlerta Mensaje1": "PreAlerta Mensaje",
