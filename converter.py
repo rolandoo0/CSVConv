@@ -434,7 +434,7 @@ def addNewColumns(df: pd.DataFrame):
     tipoRee = []
     for i in range(1, lengthOfRows + 1):
         tipoRee.append("N")
-    df.insert(19, "Tipo Ree.", impRee)
+    df.insert(19, "Tipo Ree.", tipoRee)
 
     observaciones = df.pop("Observaciones 1")
     df.insert(20, "Observaciones 1", observaciones)
