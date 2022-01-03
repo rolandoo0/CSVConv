@@ -499,10 +499,18 @@ def addNewColumns(df: pd.DataFrame):
                     if row == 1:
                        pass
                     if row == 2:
-                        newname = prodNameAtRowIndex.upper()[:40]
+                        newname = prodNameAtRowIndex.upper()
+                        if "BLANCO" in newname:
+                            newname = "BAG IN BOX 5L BLANCO JOVEN"
+                        elif "ROSADO" in newname:
+                            newname = "BAG IN BOX 5L ROSADO JOVEN"
+                        elif "PREMIUM" in newname:
+                            newname = "BAG IN BOX 5L TINTO PREMIUM"
+                        elif "RECOMENDADO" in newname:
+                            newname = "BAG IN BOX 5L TINTO RECOMENDADO"
                         df.loc[
                             df["Observaciones 1"] == prodNameAtRowIndex, "Observaciones 1"
-                        ] = "(PACK 2) " + newname
+                        ] = "PACK (2) " + newname
                 else:
                     remainder = row % 2
                     index = 0
@@ -513,7 +521,15 @@ def addNewColumns(df: pd.DataFrame):
                         listWhereProds = list(df.loc[df["Observaciones 1"] == prodNameAtRowIndex].index)
                         for i in listWhereProds:
                             newname = df.loc[i]["Observaciones 1"].upper()[:40]
-                            df.at[df.index[int(i)], "Observaciones 1"] = "(PACK 2) " + newname
+                            if "BLANCO" in newname:
+                                newname = "BAG IN BOX 5L BLANCO JOVEN"
+                            elif "ROSADO" in newname:
+                                newname = "BAG IN BOX 5L ROSADO JOVEN"
+                            elif "PREMIUM" in newname:
+                                newname = "BAG IN BOX 5L TINTO PREMIUM"
+                            elif "RECOMENDADO" in newname:
+                                newname = "BAG IN BOX 5L TINTO RECOMENDADO"
+                            df.at[df.index[int(i)], "Observaciones 1"] = "PACK (2) " + newname
                     else:
                         newLimit = int(((row - 1) / 2) + remainder)
                         for i in range(newLimit):
@@ -521,7 +537,15 @@ def addNewColumns(df: pd.DataFrame):
                                 df = insertRow(int(rowIndex) + 1 + index, df, rowToDuplicate)
                                 listWhereProds = list(df.loc[df["Observaciones 1"] == prodNameAtRowIndex].index)
                                 newname = prodNameAtRowIndex.upper()[:40]
-                                df.at[df.index[int(rowIndex) + 1 + index], "Observaciones 1"] = "(PACK 2) " + newname
+                                if "BLANCO" in newname:
+                                    newname = "BAG IN BOX 5L BLANCO JOVEN"
+                                elif "ROSADO" in newname:
+                                    newname = "BAG IN BOX 5L ROSADO JOVEN"
+                                elif "PREMIUM" in newname:
+                                    newname = "BAG IN BOX 5L TINTO PREMIUM"
+                                elif "RECOMENDADO" in newname:
+                                    newname = "BAG IN BOX 5L TINTO RECOMENDADO"
+                                df.at[df.index[int(rowIndex) + 1 + index], "Observaciones 1"] = "PACK (2) " + newname
                                 index += 1
                             else:
                                 pass
@@ -533,14 +557,14 @@ def addNewColumns(df: pd.DataFrame):
             indexes = list(df.loc[df["Observaciones 1"] == row].index)
             quantity = list(df.loc[df["Observaciones 1"] == row, "quantity-to-ship"])
             for r in range(len(indexes)):
-                nameAT = df.iloc[int(indexes[r] + index)]["Nom. Entrega"]
+                nameAT = df.iloc[int(indexes[r]) + index]["Nom. Entrega"]
                 #("Name at {i} is {name}".format(i=indexes[r] + index, name=nameAT))
                 #print('Name at 21' + str(df.iloc[int(21)]["Nom. Entrega"]))
                 #print('Name at 22' + str(df.iloc[int(22)]["Nom. Entrega"]))
                 #print('Name at 23' + str(df.iloc[int(23)]["Nom. Entrega"]))
                 amountToDuplicate = (quantity[r] * 2) - 1
                 for i in range(amountToDuplicate):
-                    rowToDuplicate = df.iloc[int(indexes[r] + index)]
+                    rowToDuplicate = df.iloc[int(indexes[r]) + index]
                     df = insertRow(int(indexes[r]) + 1 + index, df, rowToDuplicate)
                     index += 1
             break
