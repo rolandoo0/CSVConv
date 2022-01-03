@@ -472,8 +472,8 @@ def addNewColumns(df: pd.DataFrame):
     index = 0
     indexL = list(df.loc[df["quantity-to-ship"] > 1].index)
     for i in indexL:
-        if i in indexLIST:
-            break
+        if i in indexLIST and indexL.index(i) != len(indexL) - 1:
+            pass
         else:
             indexLIST.append(str(int(i) + index))
             index += 1
@@ -495,35 +495,54 @@ def addNewColumns(df: pd.DataFrame):
                     df = insertRow(int(rowIndex) + 1, df, rowToDuplicate)
             elif "BAG IN BOX 5L" in prodNameAtRowIndex.upper():
                 if row <= 2:
-                    numsList = []
-                    for i in indexLIST:
-                        if indexLIST.index(i) == 0:
-                            pass
-                        else:
-                            numsList.append(str(int(i) - 1))
-                            indexLIST.pop(indexLIST.index(i))
-                    for i in numsList:
-                        indexLIST.append(i)
+                    indexLISTquant = list(df.loc[df["Observaciones 1"] == prodNameAtRowIndex].index)
+                    if row == 1:
+                       pass
+                    if row == 2:
+                        newname = prodNameAtRowIndex.upper()[:40]
+                        df.loc[
+                            df["Observaciones 1"] == prodNameAtRowIndex, "Observaciones 1"
+                        ] = "(PACK 2) " + newname
                 else:
                     remainder = row % 2
+                    index = 0
                     if remainder == 0:
                         division = (row / 2) - 1
-                        for i in range(division):
-                            df = insertRow(int(rowIndex) + 1, df, rowToDuplicate)
+                        for i in range(int(division)):
+                            df = insertRow(int(rowIndex) + 1 + index, df, rowToDuplicate)
+                        listWhereProds = list(df.loc[df["Observaciones 1"] == prodNameAtRowIndex].index)
+                        for i in listWhereProds:
+                            newname = df.loc[i]["Observaciones 1"].upper()[:40]
+                            df.at[df.index[int(i)], "Observaciones 1"] = "(PACK 2) " + newname
                     else:
-                        for i in range(remainder):
-                            df = insertRow(int(rowIndex) + 1, df, rowToDuplicate)
+                        newLimit = int(((row - 1) / 2) + remainder)
+                        for i in range(newLimit):
+                            if i < newLimit - 1:
+                                df = insertRow(int(rowIndex) + 1 + index, df, rowToDuplicate)
+                                listWhereProds = list(df.loc[df["Observaciones 1"] == prodNameAtRowIndex].index)
+                                newname = prodNameAtRowIndex.upper()[:40]
+                                df.at[df.index[int(rowIndex) + 1 + index], "Observaciones 1"] = "(PACK 2) " + newname
+                                index += 1
+                            else:
+                                pass
             indexLIST.pop(indexLIST.index(rowIndex))
 
     for row in df["Observaciones 1"]:
         if "PACK - 2" in row:
+            index = 0
             indexes = list(df.loc[df["Observaciones 1"] == row].index)
             quantity = list(df.loc[df["Observaciones 1"] == row, "quantity-to-ship"])
             for r in range(len(indexes)):
-                amountToDuplicate = quantity[0]
+                nameAT = df.iloc[int(indexes[r] + index)]["Nom. Entrega"]
+                #("Name at {i} is {name}".format(i=indexes[r] + index, name=nameAT))
+                #print('Name at 21' + str(df.iloc[int(21)]["Nom. Entrega"]))
+                #print('Name at 22' + str(df.iloc[int(22)]["Nom. Entrega"]))
+                #print('Name at 23' + str(df.iloc[int(23)]["Nom. Entrega"]))
+                amountToDuplicate = (quantity[r] * 2) - 1
                 for i in range(amountToDuplicate):
-                    rowToDuplicate = df.iloc[int(indexes[r])]
-                    df = insertRow(int(indexes[r]) + 1, df, rowToDuplicate)
+                    rowToDuplicate = df.iloc[int(indexes[r] + index)]
+                    df = insertRow(int(indexes[r]) + 1 + index, df, rowToDuplicate)
+                    index += 1
             break
     
     df.pop("quantity-to-ship")
@@ -533,7 +552,7 @@ def addNewColumns(df: pd.DataFrame):
         df.loc[df["Nom. Entrega"] == row, "Nom. Entrega"] = newRow.upper()
 
     for row in df["Observaciones 1"]:
-        if "Bag in Box 15L Vino Tinto" in row or "Bag in Box 15L Vino" in row:
+        if "Bag in Box 15L Vino Tinto" in row:
             if "Recomendado" in row:
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
@@ -542,10 +561,6 @@ def addNewColumns(df: pd.DataFrame):
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "BAG IN BOX 15L TINTO PREMIUM"
-            elif "cosechero" in row:
-                df.loc[
-                    df["Observaciones 1"] == row, "Observaciones 1"
-                ] = "BAG IN BOX 15L TINTO CAJA BARRICA"
         elif "PACK - 2" in row:
             df.loc[
                 df["Observaciones 1"] == row, "Observaciones 1"
@@ -563,6 +578,24 @@ def addNewColumns(df: pd.DataFrame):
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "BAG IN BOX 5L TINTO CAJA BARRICA"
+        elif "Bag in Box verdejo 15 Litros" in row:
+            df.loc[
+                df["Observaciones 1"] == row, "Observaciones 1"
+            ] = "BAG IN BOX 15L VERDEJO PAZ VI"
+        elif "Bag in Box 15L Vino" in row:
+            if "cosechero" in row:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "BAG IN BOX 15L TINTO CAJA BARRICA"
+            elif "Blanco" in row:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "BAG IN BOX 15L BLANCO JOVEN"
+            elif "Rosado" in row:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "BAG IN BOX 15L ROSADO JOVEN"
+    
     with ExcelWriter(
         "{d}.xlsx".format(d=datetime.datetime.now().strftime("%d-%m-%Y"))
     ) as writer:
@@ -577,7 +610,6 @@ def addNewColumns(df: pd.DataFrame):
                     writer.save()
         writer.save()
     # print(df)
-
 
 def main():
     rawStringPath = input("Introduzca la direccion del archivo: ")
