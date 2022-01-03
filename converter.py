@@ -602,6 +602,14 @@ def addNewColumns(df: pd.DataFrame):
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "BAG IN BOX 5L TINTO CAJA BARRICA"
+            elif "BLANCO" in row.upper() and "PACK (2)" not in row:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "BAG IN BOX 5L BLANCO JOVEN"
+            elif "ROSADO" in row.upper() and "PACK (2)" not in row:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "BAG IN BOX 5L ROSADO JOVEN"
         elif "Bag in Box verdejo 15 Litros" in row:
             df.loc[
                 df["Observaciones 1"] == row, "Observaciones 1"
