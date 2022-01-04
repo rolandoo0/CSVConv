@@ -568,18 +568,10 @@ def addNewColumns(df: pd.DataFrame):
                        pass
                     if row == 2:
                         newname = prodNameAtRowIndex.upper()
-                        if "BLANCO" in newname:
-                            newname = "BAG IN BOX 3L BLANCO JOVEN"
-                        elif "ROSADO" in newname:
-                            newname = "BAG IN BOX 3L ROSADO JOVEN"
-                        elif "PREMIUM" in newname:
-                            newname = "BAG IN BOX 3L TINTO PREMIUM"
-                        elif "RECOMENDADO" in newname:
+                        if "RECOMENDADO" in newname:
                             newname = "BAG IN BOX 3L TINTO RECOMENDADO"
                         elif "BAG IN BOX VINO BLANCO VERDEJO 3 LITROS":
                             newname = "BAG IN BOX 3L VERDEJO PAZ VI"
-                        elif "BAG IN BOX 3L VINO TINTOS RECOMENDADO":
-                            newname = "BAG IN BOX 3L TINTO RECOMENDADO"
                         elif "BAG IN BOX 3L VINO TINTO NUEVO REINO":
                             newname = "BAG IN BOX 3L TINTO NUEVO REINO"
                         df.loc[
@@ -595,15 +587,7 @@ def addNewColumns(df: pd.DataFrame):
                         listWhereProds = list(df.loc[df["Observaciones 1"] == prodNameAtRowIndex].index)
                         for i in listWhereProds:
                             newname = df.loc[i]["Observaciones 1"].upper()[:40]
-                            if "BLANCO" in newname:
-                                newname = "BAG IN BOX 3L BLANCO JOVEN"
-                            elif "ROSADO" in newname:
-                                newname = "BAG IN BOX 3L ROSADO JOVEN"
-                            elif "PREMIUM" in newname:
-                                newname = "BAG IN BOX 3L TINTO PREMIUM"
-                            elif "RECOMENDADO" in newname:
-                                newname = "BAG IN BOX 3L TINTO RECOMENDADO"
-                            elif "BAG IN BOX VINO BLANCO VERDEJO 3 LITROS":
+                            if "BAG IN BOX VINO BLANCO VERDEJO 3 LITROS":
                                 newname = "BAG IN BOX 3L VERDEJO PAZ VI"
                             elif "BAG IN BOX 3L VINO TINTOS RECOMENDADO":
                                 newname = "BAG IN BOX 3L TINTO RECOMENDADO"
@@ -617,15 +601,7 @@ def addNewColumns(df: pd.DataFrame):
                                 df = insertRow(int(rowIndex) + 1 + index, df, rowToDuplicate)
                                 listWhereProds = list(df.loc[df["Observaciones 1"] == prodNameAtRowIndex].index)
                                 newname = prodNameAtRowIndex.upper()[:40]
-                                if "BLANCO" in newname:
-                                    newname = "BAG IN BOX 3L BLANCO JOVEN"
-                                elif "ROSADO" in newname:
-                                    newname = "BAG IN BOX 3L ROSADO JOVEN"
-                                elif "PREMIUM" in newname:
-                                    newname = "BAG IN BOX 3L TINTO PREMIUM"
-                                elif "RECOMENDADO" in newname:
-                                    newname = "BAG IN BOX 3L TINTO RECOMENDADO"
-                                elif "BAG IN BOX VINO BLANCO VERDEJO 3 LITROS":
+                                if "BAG IN BOX VINO BLANCO VERDEJO 3 LITROS":
                                     newname = "BAG IN BOX 3L VERDEJO PAZ VI"
                                 elif "BAG IN BOX 3L VINO TINTOS RECOMENDADO":
                                     newname = "BAG IN BOX 3L TINTO RECOMENDADO"
