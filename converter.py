@@ -508,6 +508,10 @@ def addNewColumns(df: pd.DataFrame):
                             newname = "BAG IN BOX 5L TINTO PREMIUM"
                         elif "RECOMENDADO" in newname:
                             newname = "BAG IN BOX 5L TINTO RECOMENDADO"
+                        elif "VERDEJO" in newname:
+                            newname = "BAG IN BOX 5L VERDEJO PAZ VI"
+                        elif "NUEVO REINO" in newname:
+                            newname = "BAG IN BOX 5L TINTO NUEVO REINO"
                         df.loc[
                             df["Observaciones 1"] == prodNameAtRowIndex, "Observaciones 1"
                         ] = "PACK (2) " + newname
@@ -529,6 +533,10 @@ def addNewColumns(df: pd.DataFrame):
                                 newname = "BAG IN BOX 5L TINTO PREMIUM"
                             elif "RECOMENDADO" in newname:
                                 newname = "BAG IN BOX 5L TINTO RECOMENDADO"
+                            elif "VERDEJO" in newname:
+                                newname = "BAG IN BOX 5L VERDEJO PAZ VI"
+                            elif "NUEVO REINO" in newname:
+                                newname = "BAG IN BOX 5L TINTO NUEVO REINO"
                             df.at[df.index[int(i)], "Observaciones 1"] = "PACK (2) " + newname
                     else:
                         newLimit = int(((row - 1) / 2) + remainder)
@@ -545,6 +553,84 @@ def addNewColumns(df: pd.DataFrame):
                                     newname = "BAG IN BOX 5L TINTO PREMIUM"
                                 elif "RECOMENDADO" in newname:
                                     newname = "BAG IN BOX 5L TINTO RECOMENDADO"
+                                elif "VERDEJO" in newname:
+                                    newname = "BAG IN BOX 5L VERDEJO PAZ VI"
+                                elif "NUEVO REINO" in newname:
+                                    newname = "BAG IN BOX 5L TINTO NUEVO REINO"
+                                df.at[df.index[int(rowIndex) + 1 + index], "Observaciones 1"] = "PACK (2) " + newname
+                                index += 1
+                            else:
+                                pass
+            elif "BAG IN BOX 3L" in prodNameAtRowIndex.upper():
+                if row <= 2:
+                    indexLISTquant = list(df.loc[df["Observaciones 1"] == prodNameAtRowIndex].index)
+                    if row == 1:
+                       pass
+                    if row == 2:
+                        newname = prodNameAtRowIndex.upper()
+                        if "BLANCO" in newname:
+                            newname = "BAG IN BOX 3L BLANCO JOVEN"
+                        elif "ROSADO" in newname:
+                            newname = "BAG IN BOX 3L ROSADO JOVEN"
+                        elif "PREMIUM" in newname:
+                            newname = "BAG IN BOX 3L TINTO PREMIUM"
+                        elif "RECOMENDADO" in newname:
+                            newname = "BAG IN BOX 3L TINTO RECOMENDADO"
+                        elif "BAG IN BOX VINO BLANCO VERDEJO 3 LITROS":
+                            newname = "BAG IN BOX 3L VERDEJO PAZ VI"
+                        elif "BAG IN BOX 3L VINO TINTOS RECOMENDADO":
+                            newname = "BAG IN BOX 3L TINTO RECOMENDADO"
+                        elif "BAG IN BOX 3L VINO TINTO NUEVO REINO":
+                            newname = "BAG IN BOX 3L TINTO NUEVO REINO"
+                        df.loc[
+                            df["Observaciones 1"] == prodNameAtRowIndex, "Observaciones 1"
+                        ] = "PACK (2) " + newname
+                else:
+                    remainder = row % 2
+                    index = 0
+                    if remainder == 0:
+                        division = (row / 2) - 1
+                        for i in range(int(division)):
+                            df = insertRow(int(rowIndex) + 1 + index, df, rowToDuplicate)
+                        listWhereProds = list(df.loc[df["Observaciones 1"] == prodNameAtRowIndex].index)
+                        for i in listWhereProds:
+                            newname = df.loc[i]["Observaciones 1"].upper()[:40]
+                            if "BLANCO" in newname:
+                                newname = "BAG IN BOX 3L BLANCO JOVEN"
+                            elif "ROSADO" in newname:
+                                newname = "BAG IN BOX 3L ROSADO JOVEN"
+                            elif "PREMIUM" in newname:
+                                newname = "BAG IN BOX 3L TINTO PREMIUM"
+                            elif "RECOMENDADO" in newname:
+                                newname = "BAG IN BOX 3L TINTO RECOMENDADO"
+                            elif "BAG IN BOX VINO BLANCO VERDEJO 3 LITROS":
+                                newname = "BAG IN BOX 3L VERDEJO PAZ VI"
+                            elif "BAG IN BOX 3L VINO TINTOS RECOMENDADO":
+                                newname = "BAG IN BOX 3L TINTO RECOMENDADO"
+                            elif "BAG IN BOX 3L VINO TINTO NUEVO REINO":
+                                newname = "BAG IN BOX 3L TINTO NUEVO REINO"
+                            df.at[df.index[int(i)], "Observaciones 1"] = "PACK (2) " + newname
+                    else:
+                        newLimit = int(((row - 1) / 2) + remainder)
+                        for i in range(newLimit):
+                            if i < newLimit - 1:
+                                df = insertRow(int(rowIndex) + 1 + index, df, rowToDuplicate)
+                                listWhereProds = list(df.loc[df["Observaciones 1"] == prodNameAtRowIndex].index)
+                                newname = prodNameAtRowIndex.upper()[:40]
+                                if "BLANCO" in newname:
+                                    newname = "BAG IN BOX 3L BLANCO JOVEN"
+                                elif "ROSADO" in newname:
+                                    newname = "BAG IN BOX 3L ROSADO JOVEN"
+                                elif "PREMIUM" in newname:
+                                    newname = "BAG IN BOX 3L TINTO PREMIUM"
+                                elif "RECOMENDADO" in newname:
+                                    newname = "BAG IN BOX 3L TINTO RECOMENDADO"
+                                elif "BAG IN BOX VINO BLANCO VERDEJO 3 LITROS":
+                                    newname = "BAG IN BOX 3L VERDEJO PAZ VI"
+                                elif "BAG IN BOX 3L VINO TINTOS RECOMENDADO":
+                                    newname = "BAG IN BOX 3L TINTO RECOMENDADO"
+                                elif "BAG IN BOX 3L VINO TINTO NUEVO REINO":
+                                    newname = "BAG IN BOX 3L TINTO NUEVO REINO"
                                 df.at[df.index[int(rowIndex) + 1 + index], "Observaciones 1"] = "PACK (2) " + newname
                                 index += 1
                             else:
@@ -627,7 +713,72 @@ def addNewColumns(df: pd.DataFrame):
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "BAG IN BOX 15L ROSADO JOVEN"
-    
+        elif "Botellas 6" in row or "6 Botellas" in row:
+            if "PAULUS JOVEN" in row:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS PAULUS JOVEN RIOJA"
+            elif "PAULUS CRIANZA" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS PAULUS CRIANZA RIOJA"  
+            elif "SOTONOVILLOS CRIANZA" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS SOTONOVILLOS CRIANZA RIOJA"
+            elif "SIDRA NATURAL" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS SIDRA NATURAL JAREGUI"
+            elif "FAUNA IBERICA" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS COLECCION FAUNA IBERICA"
+            elif "PANJUA" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS SEÑORÍO DE PANJUA VERDEJO"
+            elif "PREMIUM VINO TINTO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS TINTO PREMIUM LOS CORZOS"
+            elif "CLARETE" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS CLARETE LOS CORZOS"
+            elif "COSECHERO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS TINTO LOS CORZOS"
+            elif "BLANCO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS BLANCO LOS CORZOS"
+            elif "ROSADO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS ROSADO LOS CORZOS"
+            elif "VERDEJO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS VERDEJO PAZ VI"
+            elif "TINTO RECOMENDADO LOS CORZOS" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS TINTO RECOMENDADO  B/N LOS CORZOS"
+            elif "EL APARATO VINO BLANCO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS TE ENSEÑO EL APARATO"
+            elif "NUEVO REINO TINTO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS TINTO NUEVO REINO"
+            elif "RUFUS" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS TINTO RUFUS RIBERA DUERO"
+            
     with ExcelWriter(
         "{d}.xlsx".format(d=datetime.datetime.now().strftime("%d-%m-%Y"))
     ) as writer:
