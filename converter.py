@@ -647,6 +647,10 @@ def addNewColumns(df: pd.DataFrame):
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "BAG IN BOX 15L TINTO PREMIUM"
+            elif "Joven" in row:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "BAG IN BOX 15L TINTO JOVEN"
         elif "PACK - 2" in row:
             df.loc[
                 df["Observaciones 1"] == row, "Observaciones 1"
@@ -672,6 +676,10 @@ def addNewColumns(df: pd.DataFrame):
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "BAG IN BOX 5L ROSADO JOVEN"
+            elif "Joven" in row:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "BAG IN BOX 5L TINTO JOVEN"
         elif "Bag in Box verdejo 15 Litros" in row:
             df.loc[
                 df["Observaciones 1"] == row, "Observaciones 1"
@@ -689,68 +697,72 @@ def addNewColumns(df: pd.DataFrame):
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "BAG IN BOX 15L ROSADO JOVEN"
-        elif "Botellas 6" in row or "6 Botellas" in row:
-            if "PAULUS JOVEN" in row:
+            elif "Joven" in row:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "BAG IN BOX 15L TINTO JOVEN"
+        elif "BOTELLAS 6" in row.upper() or "6 BOTELLAS" in row.upper():
+            if "PAULUS JOVEN" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS PAULUS JOVEN RIOJA"
-            elif "PAULUS CRIANZA" in newname:
+            elif "PAULUS CRIANZA" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS PAULUS CRIANZA RIOJA"  
-            elif "SOTONOVILLOS CRIANZA" in newname:
+            elif "SOTONOVILLOS CRIANZA" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS SOTONOVILLOS CRIANZA RIOJA"
-            elif "SIDRA NATURAL" in newname:
+            elif "SIDRA NATURAL" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS SIDRA NATURAL JAREGUI"
-            elif "FAUNA IBERICA" in newname:
+            elif "FAUNA IBERICA" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS COLECCION FAUNA IBERICA"
-            elif "PANJUA" in newname:
+            elif "PANJUA" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS SEÑORÍO DE PANJUA VERDEJO"
-            elif "PREMIUM VINO TINTO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+            elif "PREMIUM VINO TINTO" and "BOTELLAS 6" in row.upper() or "6 BOTELLAS" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS TINTO PREMIUM LOS CORZOS"
-            elif "CLARETE" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+            elif "CLARETE" and "BOTELLAS 6" in row.upper() or "6 BOTELLAS" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS CLARETE LOS CORZOS"
-            elif "COSECHERO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+            elif "COSECHERO" and "BOTELLAS 6" in row.upper() or "6 BOTELLAS" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS TINTO LOS CORZOS"
-            elif "BLANCO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+            elif "BLANCO" and "BOTELLAS 6" in row.upper() or "6 BOTELLAS" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS BLANCO LOS CORZOS"
-            elif "ROSADO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+            elif "ROSADO" and "BOTELLAS 6" in row.upper() or "6 BOTELLAS" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS ROSADO LOS CORZOS"
-            elif "VERDEJO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+            elif "VERDEJO" and "BOTELLAS 6" in row.upper() or "6 BOTELLAS" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS VERDEJO PAZ VI"
-            elif "TINTO RECOMENDADO LOS CORZOS" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+            elif "TINTO RECOMENDADO LOS CORZOS" and "BOTELLAS 6" in row.upper() or "6 BOTELLAS" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS TINTO RECOMENDADO  B/N LOS CORZOS"
-            elif "EL APARATO VINO BLANCO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+            elif "EL APARATO VINO BLANCO" and "BOTELLAS 6" in row.upper() or "6 BOTELLAS" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS TE ENSEÑO EL APARATO"
-            elif "NUEVO REINO TINTO" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+            elif "NUEVO REINO TINTO" and "BOTELLAS 6" in row.upper() or "6 BOTELLAS" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS TINTO NUEVO REINO"
-            elif "RUFUS" and "BOTELLAS 6" in newname or "6 BOTELLAS" in newname:
+            elif "RUFUS" and "BOTELLAS 6" in row.upper() or "6 BOTELLAS" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS TINTO RUFUS RIBERA DUERO"
