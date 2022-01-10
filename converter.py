@@ -70,6 +70,10 @@ def convertToCSV(input_file):
                     line = line.replace("├",'')
                 except:
                     pass
+                try:
+                    line = line.replace("n┬║",'')
+                except:
+                    pass
                 masterRows.append(line)
         with open("output.csv", "w", newline="") as csv_out_file:
             filewriter = csv.writer(csv_out_file)
@@ -482,7 +486,9 @@ def addNewColumns(df: pd.DataFrame):
                 divisibleBy = quantityNumber % 2
                 if divisibleBy == 0:
                     indexToAdd = int((quantityNumber / 2) - 1)
-                indexLIST.append(str(int(i) + indexToAdd))
+                    indexLIST.append(str(int(i) + indexToAdd))
+                else:
+                    indexLIST.append(str(int(i)))
             else:
                 indexLIST.append(str(int(i) + index))
                 index += 1
@@ -518,10 +524,12 @@ def addNewColumns(df: pd.DataFrame):
                             newname = "BAG IN BOX 5L TINTO PREMIUM"
                         elif "RECOMENDADO" in newname:
                             newname = "BAG IN BOX 5L TINTO RECOMENDADO"
-                        elif "VERDEJO" in newname:
+                        elif "VERDEJO" in newname and "BLANCO" not in newname:
                             newname = "BAG IN BOX 5L VERDEJO PAZ VI"
                         elif "NUEVO REINO" in newname:
                             newname = "BAG IN BOX 5L TINTO NUEVO REINO"
+                        elif "VERDEJO" in newname and "BLANCO" in newname:
+                            newname = "BAG IN BOX 5L BLANCO VERDEJO"
                         df.loc[
                             df["Observaciones 1"] == prodNameAtRowIndex, "Observaciones 1"
                         ] = "PACK (2) " + newname
@@ -543,10 +551,12 @@ def addNewColumns(df: pd.DataFrame):
                                 newname = "BAG IN BOX 5L TINTO PREMIUM"
                             elif "RECOMENDADO" in newname:
                                 newname = "BAG IN BOX 5L TINTO RECOMENDADO"
-                            elif "VERDEJO" in newname:
+                            elif "VERDEJO" in newname  and "BLANCO" not in newname:
                                 newname = "BAG IN BOX 5L VERDEJO PAZ VI"
                             elif "NUEVO REINO" in newname:
                                 newname = "BAG IN BOX 5L TINTO NUEVO REINO"
+                            elif "VERDEJO" in newname and "BLANCO" in newname:
+                                newname = "BAG IN BOX 5L BLANCO VERDEJO"
                             df.at[df.index[int(i)], "Observaciones 1"] = "PACK (2) " + newname
                     else:
                         newLimit = int(((row - 1) / 2) + remainder)
@@ -563,15 +573,17 @@ def addNewColumns(df: pd.DataFrame):
                                     newname = "BAG IN BOX 5L TINTO PREMIUM"
                                 elif "RECOMENDADO" in newname:
                                     newname = "BAG IN BOX 5L TINTO RECOMENDADO"
-                                elif "VERDEJO" in newname:
+                                elif "VERDEJO" in newname and "BLANCO" not in newname:
                                     newname = "BAG IN BOX 5L VERDEJO PAZ VI"
                                 elif "NUEVO REINO" in newname:
                                     newname = "BAG IN BOX 5L TINTO NUEVO REINO"
+                                elif "VERDEJO" in newname and "BLANCO" in newname:
+                                    newname = "BAG IN BOX 5L BLANCO VERDEJO PAZ VI"
                                 df.at[df.index[int(rowIndex) + 1 + index], "Observaciones 1"] = "PACK (2) " + newname
                                 index += 1
                             else:
                                 pass
-            elif "BAG IN BOX 3L" in prodNameAtRowIndex.upper():
+            elif "BAG IN BOX 3L" in prodNameAtRowIndex.upper() or "BAG IN BOX" and "3 LITROS" in prodNameAtRowIndex.upper():
                 if row <= 2:
                     indexLISTquant = list(df.loc[df["Observaciones 1"] == prodNameAtRowIndex].index)
                     if row == 1:
@@ -584,6 +596,8 @@ def addNewColumns(df: pd.DataFrame):
                             newname = "BAG IN BOX 3L VERDEJO PAZ VI"
                         elif "BAG IN BOX 3L VINO TINTO NUEVO REINO" in newname:
                             newname = "BAG IN BOX 3L TINTO NUEVO REINO"
+                        elif "BAG IN BOX VINO BLANCO VERDEJO" in newname:
+                            newname = "BAG IN BOX 3L BLANCO VERDEJO"
                         df.loc[
                             df["Observaciones 1"] == prodNameAtRowIndex, "Observaciones 1"
                         ] = "PACK (2) " + newname
@@ -603,6 +617,8 @@ def addNewColumns(df: pd.DataFrame):
                                 newname = "BAG IN BOX 3L TINTO RECOMENDADO"
                             elif "BAG IN BOX 3L VINO TINTO NUEVO REINO" in newname:
                                 newname = "BAG IN BOX 3L TINTO NUEVO REINO"
+                            elif "BAG IN BOX VINO BLANCO VERDEJO" in newname:
+                                newname = "BAG IN BOX 3L BLANCO VERDEJO"
                             df.at[df.index[int(i)], "Observaciones 1"] = "PACK (2) " + newname
                     else:
                         newLimit = int(((row - 1) / 2) + remainder)
@@ -617,6 +633,8 @@ def addNewColumns(df: pd.DataFrame):
                                     newname = "BAG IN BOX 3L TINTO RECOMENDADO"
                                 elif "BAG IN BOX 3L VINO TINTO NUEVO REINO" in newname:
                                     newname = "BAG IN BOX 3L TINTO NUEVO REINO"
+                                elif "BAG IN BOX VINO BLANCO VERDEJO" in newname:
+                                    newname = "BAG IN BOX 3L BLANCO VERDEJO"
                                 df.at[df.index[int(rowIndex) + 1 + index], "Observaciones 1"] = "PACK (2) " + newname
                                 index += 1
                             else:
@@ -641,7 +659,7 @@ def addNewColumns(df: pd.DataFrame):
                     index += 1
             break
     
-    #df.pop("quantity-to-ship")
+    df.pop("quantity-to-ship")
     
     for row in df["Nom. Entrega"]:
         newRow = formatNAMES(row)
@@ -665,7 +683,7 @@ def addNewColumns(df: pd.DataFrame):
             df.loc[
                 df["Observaciones 1"] == row, "Observaciones 1"
             ] = "BAG IN BOX 15L TINTO CAJA BARRICA"
-        elif "Bag in Box 5L" in row or "BAG IN BOX 5L" in row:
+        elif "Bag in Box 5L" in row or "BAG IN BOX 5L" in row or "BAG IN BOX" and "5 LITROS" in row:
             if "PREMIUM" in row:
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
@@ -690,6 +708,10 @@ def addNewColumns(df: pd.DataFrame):
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "BAG IN BOX 5L TINTO JOVEN"
+            elif "Verdejo" in row and "Blanco" in row:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "BAG IN BOX 5L VERDEJO PAZ VI"
         elif "Bag in Box verdejo 15 Litros" in row:
             df.loc[
                 df["Observaciones 1"] == row, "Observaciones 1"
@@ -776,7 +798,7 @@ def addNewColumns(df: pd.DataFrame):
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "C-6 BOTELLAS TINTO RUFUS RIBERA DUERO"
-        elif "BAG IN BOX 3L" in row.upper():
+        elif "BAG IN BOX 3L" in row.upper() or "BAG IN BOX" and "3 LITROS" in row.upper():
             if "COSECHERO" in row.upper():
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
@@ -785,6 +807,10 @@ def addNewColumns(df: pd.DataFrame):
                 df.loc[
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "BAG IN BOX 3L TINTO RECOMENDADO"
+            elif "VERDEJO" in row.upper() and "BLANCO" in row.upper():
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "BAG IN BOX 3L BLANCO VERDEJO AFRUTADO"
     with ExcelWriter(
         "{d}.xlsx".format(d=datetime.datetime.now().strftime("%d-%m-%Y"))
     ) as writer:
