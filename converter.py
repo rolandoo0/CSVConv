@@ -74,6 +74,17 @@ def convertToCSV(input_file):
                     line = line.replace("n┬║",'')
                 except:
                     pass
+                try:
+                    line = line.replace("N┬║52",'')
+                except:
+                    pass
+                try:
+                    line = line.replace("1┬║D",'')
+                except:
+                    pass
+                for i in line:
+                    if not i.isalpha and not i.isnumeric():
+                        line = line.replace(i,'')
                 masterRows.append(line)
         with open("output.csv", "w", newline="") as csv_out_file:
             filewriter = csv.writer(csv_out_file)
