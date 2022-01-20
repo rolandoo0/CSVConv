@@ -82,6 +82,10 @@ def convertToCSV(input_file):
                     line = line.replace("1┬║D",'')
                 except:
                     pass
+                try:
+                    line = line.replace("▒",'')
+                except:
+                    pass
                 for i in line:
                     if not i.isalpha and not i.isnumeric():
                         line = line.replace(i,'')
