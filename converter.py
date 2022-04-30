@@ -87,8 +87,8 @@ def convertToCSV(input_file):
                 except:
                     pass
                 for i in line:
-                    if not i.isalpha and not i.isnumeric():
-                        line = line.replace(i,'')
+                    if not i.isalpha() and not i.isnumeric() and i != "-" and i != '\t' and i != " " and i != ":" and i != '+' and i != "@" and i != '.':
+                            line = line.replace(i,'')
                 masterRows.append(line)
         with open("output.csv", "w", newline="") as csv_out_file:
             filewriter = csv.writer(csv_out_file)
@@ -203,12 +203,12 @@ def readCSV(outputFile, inputFile):
     try:
         df = pd.read_csv(outputFile)
     except:
-        question = input(Fore.YELLOW + "Se detectaron errores en el archivo, quisiera obtener el mayor número de filas posibles?\nDe lo contrario se obtendran todas las filas pero con otro formato. (y/n) " + Fore.RESET)
+        """question = input(Fore.YELLOW + "Se detectaron errores en el archivo, quisiera obtener el mayor número de filas posibles?\nDe lo contrario se obtendran todas las filas pero con otro formato. (y/n) " + Fore.RESET)
         if question == "y":
             convertAFTERQUESTION(inputFile)
             df = pd.read_csv(outputFile)
-        else:
-            df = pd.read_csv(outputFile, encoding="unicode_escape")
+        else:"""
+        df = pd.read_csv(outputFile, encoding="unicode_escape")
     for column in df.columns:
         if column not in columnNames:
             df.pop(column)
@@ -842,22 +842,24 @@ def addNewColumns(df: pd.DataFrame):
     # print(df)
 
 def main():
-    rawStringPath = input("Introduzca la direccion del archivo: ")
-    rawStringPath = rawStringPath.replace('"', "")
-    convertToCSV(r"{s}".format(s=rawStringPath))
-    readCSV(r"{s}\output.csv".format(s=os.getcwd()),r"{s}".format(s=rawStringPath))
-    filename = "{d}.xlsx".format(d=datetime.datetime.now().strftime("%d-%m-%Y"))
-    base = os.path.splitext(filename)[0]
-    
-    os.remove(r"{s}\output.csv".format(s=os.getcwd()))
-    os.remove(r"{s}\outputExcel.xlsx".format(s=os.getcwd()))
-    os.system("cls")
-    print(
-        Fore.GREEN
-        + 'Proceso finalizado.\nArchivo generado: "{f}"'.format(f=filename)
-        + Fore.RESET
-    )
-    time.sleep(5)
+    try:
+        rawStringPath = input("Introduzca la direccion del archivo: ")
+        rawStringPath = rawStringPath.replace('"', "")
+        convertToCSV(r"{s}".format(s=rawStringPath))
+        readCSV(r"{s}\output.csv".format(s=os.getcwd()),r"{s}".format(s=rawStringPath))
+        filename = "{d}.xlsx".format(d=datetime.datetime.now().strftime("%d-%m-%Y"))
+        base = os.path.splitext(filename)[0]
+        os.remove(r"{s}\output.csv".format(s=os.getcwd()))
+        os.remove(r"{s}\outputExcel.xlsx".format(s=os.getcwd()))
+        os.system("cls")
+        print(
+            Fore.GREEN
+            + 'Proceso finalizado.\nArchivo generado: "{f}"'.format(f=filename)
+            + Fore.RESET
+        )
+        time.sleep(5)
+    except Exception as e:
+        print(Fore.RED + "Error: " + str(e) + Fore.RESET)
 
 
 if __name__ == "__main__":
