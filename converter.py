@@ -232,12 +232,12 @@ def formatCSV(df: pd.DataFrame):
         newRow = str(updatedRow)
         while len(str(newRow)) > 9:
             newRow = str(newRow.replace(newRow[0], "",1))
-        rowINDEX = rowIter + 1
+        rowIter = rowIter + 1
         written = True
         try:
             rowIndex = df.loc[df["buyer-phone-number"] == row].index[0]
         except:
-            df["buyer-phone-number"].iat[rowINDEX + 1] = "no telefono"
+            df["buyer-phone-number"].iat[rowIter - 1] = "no telefono"
             written = False
 
         if written == True:
