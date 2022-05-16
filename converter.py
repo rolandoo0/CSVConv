@@ -1,3 +1,4 @@
+from cmath import nan
 import csv
 import os
 import sys
@@ -222,6 +223,7 @@ def formatCSV(df: pd.DataFrame):
             newRow = "0" + str(newRow)
             rowIndex = df.loc[df["ship-postal-code"] == row].index[0]
             df["ship-postal-code"].iat[rowIndex.numerator] = newRow
+    rowIter = 0
     for row in df["buyer-phone-number"]:
         try:
             updatedRow  = row.replace(" ", "")
@@ -230,8 +232,19 @@ def formatCSV(df: pd.DataFrame):
         newRow = str(updatedRow)
         while len(str(newRow)) > 9:
             newRow = str(newRow.replace(newRow[0], "",1))
-        rowIndex = df.loc[df["buyer-phone-number"] == row].index[0]
-        df["buyer-phone-number"].iat[rowIndex.numerator] = newRow
+        rowINDEX = rowIter + 1
+        written = True
+        try:
+            rowIndex = df.loc[df["buyer-phone-number"] == row].index[0]
+        except:
+            df["buyer-phone-number"].iat[rowINDEX + 1] = "no telefono"
+            written = False
+
+        if written == True:
+            df["buyer-phone-number"].iat[rowIndex.numerator] = newRow
+        else:
+            pass
+            
     for row in df["ship-address-1"]:
         newRow = str(row)
         rowIndex = df.loc[df["ship-address-1"] == row].index[0]
