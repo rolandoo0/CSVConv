@@ -948,7 +948,7 @@ def main():
     rawStringPath = rawStringPath.replace('"', "")
     convertToCSV(r"{s}".format(s=rawStringPath))
     initial_dict = readCSV(
-        r"{s}/output.csv".format(s=os.getcwd()), r"{s}".format(s=rawStringPath)
+        r"{s}\output.csv".format(s=os.getcwd()), r"{s}".format(s=rawStringPath)
     )
     formatCSV(initial_dict)
     filename = "{d}.xlsx".format(d=datetime.datetime.now().strftime("%d-%m-%Y"))
