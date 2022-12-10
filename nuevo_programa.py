@@ -274,7 +274,6 @@ def addNewColumns(dictionary):
     workbook: ExcelWriter = writer.book
     worksheet: ExcelWriter = writer.sheets["Sheet1"]"""
     removeUnusedColumns(dictionary)
-    dictionary["Referencia"] = dictionary.pop("order-id")
     dictionary["Nom. Entrega"] = dictionary.pop("recipient-name")
     dictionary["Dirección Ent."] = dictionary.pop("ship-address-1")
     dictionary["CPEntrega"] = dictionary.pop("ship-postal-code")
@@ -282,44 +281,44 @@ def addNewColumns(dictionary):
     dictionary["Provincia Ent."] = dictionary.pop("ship-state")
     dictionary["Teléfono Ent."] = dictionary.pop("buyer-phone-number")
     dictionary["Observaciones 1"] = dictionary.pop("product-name")
-    lengthOfRows = len(dictionary["Referencia"])
+    lengthOfRows = len(dictionary["Nom. Entrega"])
     numbers = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         numbers[i] = "37"
     dictionary["Nº Abonado"] = numbers
 
     departamentos = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         departamentos[i] = " "
     dictionary["Departamento"] = departamentos
 
     servicios = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         servicios[i] = "5"
     dictionary["Servicio"] = servicios
 
     tipoCobro = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         tipoCobro[i] = "0"
     dictionary["Tipo Cobro"] = tipoCobro
 
     excesos = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         excesos[i] = " "
     dictionary["Excesos"] = excesos
-
+    dictionary["Referencia"] = dictionary.pop("order-id")
     bagsAndPacks = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         bagsAndPacks[i] = "1"
     dictionary["Bag/Paq"] = bagsAndPacks
 
     bultos = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         bultos[i] = "1"
     dictionary["Bultos"] = bultos
 
     kilos = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         kilos[i] = "1"
     dictionary["Kilos"] = kilos
 
@@ -327,12 +326,12 @@ def addNewColumns(dictionary):
     dictionary["Nom. Entrega"] = nomEntrega
 
     departamentoEnt = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         departamentoEnt[i] = " "
     dictionary["Departamento Ent."] = departamentoEnt
 
     personaEnt = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         personaEnt[i] = " "
     dictionary["Persona Ent."] = personaEnt
 
@@ -340,7 +339,7 @@ def addNewColumns(dictionary):
     dictionary["Dirección Ent."] = direccionEnt
 
     paisEnt = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         paisEnt[i] = "ES"
     dictionary["Pais Ent."] = paisEnt
 
@@ -357,12 +356,12 @@ def addNewColumns(dictionary):
     dictionary["Teléfono Ent."] = telefonoEnt
 
     impRee = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         impRee[i] = "0"
     dictionary["Imp. Ree."] = impRee
 
     tipoRee = {}
-    for i in range(0, lengthOfRows + 1):
+    for i in range(0, lengthOfRows):
         tipoRee[i] = "N"
     dictionary["Tipo Ree."] = tipoRee
 
@@ -372,7 +371,7 @@ def addNewColumns(dictionary):
     for r in range(21, 82):
         for header in headers:
             columnInfo = {}
-            for i in range(0, lengthOfRows + 1):
+            for i in range(0, lengthOfRows):
                 columnInfo[i] = headers[header]
             dictionary[header] = columnInfo
             headers.pop(header)
@@ -478,7 +477,7 @@ def addNewColumns(dictionary):
                             df["Observaciones 1"] == prodNameAtRowIndex,
                             "Observaciones 1",
                         ] = (
-                            "PACK (2) " + newname
+                            "PACK(2) " + newname
                         )
                 else:
                     remainder = row % 2
@@ -509,7 +508,7 @@ def addNewColumns(dictionary):
                             elif "VERDEJO" in newname and "BLANCO" in newname:
                                 newname = "BAG IN BOX 5L BLANCO VERDEJO"
                             df.at[df.index[int(i)], "Observaciones 1"] = (
-                                "PACK (2) " + newname
+                                "PACK(2) " + newname
                             )
                     else:
                         newLimit = int(((row - 1) / 2) + remainder)
@@ -542,7 +541,7 @@ def addNewColumns(dictionary):
                                     df.index[int(rowIndex) + 1 + index],
                                     "Observaciones 1",
                                 ] = (
-                                    "PACK (2) " + newname
+                                    "PACK(2) " + newname
                                 )
                                 index += 1
                             else:
@@ -572,7 +571,7 @@ def addNewColumns(dictionary):
                             df["Observaciones 1"] == prodNameAtRowIndex,
                             "Observaciones 1",
                         ] = (
-                            "PACK (2) " + newname
+                            "PACK(2) " + newname
                         )
                 else:
                     remainder = row % 2
@@ -597,7 +596,7 @@ def addNewColumns(dictionary):
                             elif "BAG IN BOX VINO BLANCO VERDEJO" in newname:
                                 newname = "BAG IN BOX 3L BLANCO VERDEJO"
                             df.at[df.index[int(i)], "Observaciones 1"] = (
-                                "PACK (2) " + newname
+                                "PACK(2) " + newname
                             )
                     else:
                         newLimit = int(((row - 1) / 2) + remainder)
@@ -624,7 +623,7 @@ def addNewColumns(dictionary):
                                     df.index[int(rowIndex) + 1 + index],
                                     "Observaciones 1",
                                 ] = (
-                                    "PACK (2) " + newname
+                                    "PACK(2) " + newname
                                 )
                                 index += 1
                             else:
@@ -662,6 +661,38 @@ def addNewColumns(dictionary):
         except:
             pass
 
+    ##CODIGO PARA PAPA:
+    for row in df["Observaciones 1"]:
+        try:
+            if (
+                "ColecciÃ³n FAUNA IBERICA Vino Tinto Recomendado - 8 Botellas de 750 ml"
+                in row
+            ):
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-8 BOTELLAS COLECCION FAUNA IBERICA"
+            elif (
+                "Vino Tinto 00 SIN ALCOHOL - DOS MUNDOS  Caja de 6 botellas x 075 cl"
+                in row
+            ):
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS SIN ALCOHOL DOS MUNDOS"
+            elif (
+                "Vino Clarete de mesa cosecheroLos Corzos Caja de Botellas 6 x 750 ml - Total: 4500 ml"
+                in row
+            ):
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "C-6 BOTELLAS CLARETE JOVEN LOS CORZOS"
+            """elif "C-8 Blbala" in row:
+                df.loc[
+                    df["Observaciones 1"] == row, "Observaciones 1"
+                ] = "SARMIENTOS DE VID LOS CORZOS
+            """
+        except:
+            pass
+
     for row in df["Observaciones 1"]:
         try:
             if "Bag in Box 15L Vino Tinto" in row:
@@ -682,10 +713,10 @@ def addNewColumns(dictionary):
                     df["Observaciones 1"] == row, "Observaciones 1"
                 ] = "BAG IN BOX 15L TINTO CAJA BARRICA"
             elif (
-                "Bag in Box 5L" in row
-                or "BAG IN BOX 5L" in row
+                "Bag in Box 5L" in row.upper()
+                or "BAG IN BOX 5L" in row.upper()
                 or "BAG IN BOX"
-                and "5 LITROS" in row
+                and " 5 LITROS" in row.upper()
             ):
                 if "PREMIUM" in row:
                     df.loc[
@@ -699,19 +730,28 @@ def addNewColumns(dictionary):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
                     ] = "BAG IN BOX 5L TINTO CAJA BARRICA"
-                elif "BLANCO" in row.upper() and "PACK (2)" not in row:
+                elif (
+                    "BLANCO" in row.upper()
+                    and "PACK(2)" not in row
+                    and "VERDEJO" not in row.upper()
+                ):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
                     ] = "BAG IN BOX 5L BLANCO JOVEN"
-                elif "ROSADO" in row.upper() and "PACK (2)" not in row:
+                elif "ROSADO" in row.upper() and "PACK(2)" not in row:
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
                     ] = "BAG IN BOX 5L ROSADO JOVEN"
-                elif "Joven" in row:
-                    df.loc[
-                        df["Observaciones 1"] == row, "Observaciones 1"
-                    ] = "BAG IN BOX 5L TINTO JOVEN"
-                elif "Verdejo" in row and "Blanco" in row:
+                elif "JOVEN" in row.upper():
+                    if "PACK(2)" in row:
+                        df.loc[
+                            df["Observaciones 1"] == row, "Observaciones 1"
+                        ] = "PACK(2) BAG IN BOX 5L TINTO JOVEN"
+                    else:
+                        df.loc[
+                            df["Observaciones 1"] == row, "Observaciones 1"
+                        ] = "BAG IN BOX 5L TINTO JOVEN"
+                elif "verdejo" in row.lower() and "blanco" in row.lower():
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
                     ] = "BAG IN BOX 5L VERDEJO PAZ VI"
@@ -765,6 +805,7 @@ def addNewColumns(dictionary):
                     "PREMIUM VINO TINTO"
                     and "BOTELLAS 6" in row.upper()
                     or "6 BOTELLAS" in row.upper()
+                    and "C-6" not in row.upper()
                 ):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
@@ -773,6 +814,7 @@ def addNewColumns(dictionary):
                     "CLARETE"
                     and "BOTELLAS 6" in row.upper()
                     or "6 BOTELLAS" in row.upper()
+                    and "C-6" not in row.upper()
                 ):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
@@ -781,6 +823,7 @@ def addNewColumns(dictionary):
                     "COSECHERO"
                     and "BOTELLAS 6" in row.upper()
                     or "6 BOTELLAS" in row.upper()
+                    and "C-6" not in row.upper()
                 ):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
@@ -789,6 +832,7 @@ def addNewColumns(dictionary):
                     "BLANCO"
                     and "BOTELLAS 6" in row.upper()
                     or "6 BOTELLAS" in row.upper()
+                    and "C-6" not in row.upper()
                 ):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
@@ -797,6 +841,7 @@ def addNewColumns(dictionary):
                     "ROSADO"
                     and "BOTELLAS 6" in row.upper()
                     or "6 BOTELLAS" in row.upper()
+                    and "C-6" not in row.upper()
                 ):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
@@ -805,6 +850,7 @@ def addNewColumns(dictionary):
                     "VERDEJO"
                     and "BOTELLAS 6" in row.upper()
                     or "6 BOTELLAS" in row.upper()
+                    and "C-6" not in row.upper()
                 ):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
@@ -813,6 +859,7 @@ def addNewColumns(dictionary):
                     "TINTO RECOMENDADO LOS CORZOS"
                     and "BOTELLAS 6" in row.upper()
                     or "6 BOTELLAS" in row.upper()
+                    and "C-6" not in row.upper()
                 ):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
@@ -821,6 +868,7 @@ def addNewColumns(dictionary):
                     "EL APARATO VINO BLANCO"
                     and "BOTELLAS 6" in row.upper()
                     or "6 BOTELLAS" in row.upper()
+                    and "C-6" not in row.upper()
                 ):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
@@ -829,6 +877,7 @@ def addNewColumns(dictionary):
                     "NUEVO REINO TINTO"
                     and "BOTELLAS 6" in row.upper()
                     or "6 BOTELLAS" in row.upper()
+                    and "C-6" not in row.upper()
                 ):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
@@ -837,6 +886,7 @@ def addNewColumns(dictionary):
                     "RUFUS"
                     and "BOTELLAS 6" in row.upper()
                     or "6 BOTELLAS" in row.upper()
+                    and "C-6" not in row.upper()
                 ):
                     df.loc[
                         df["Observaciones 1"] == row, "Observaciones 1"
@@ -860,6 +910,7 @@ def addNewColumns(dictionary):
                     ] = "BAG IN BOX 3L BLANCO VERDEJO AFRUTADO"
         except:
             pass
+
     with ExcelWriter(
         "{d}.xlsx".format(d=datetime.datetime.now().strftime("%d-%m-%Y"))
     ) as writer:
@@ -948,7 +999,7 @@ def main():
     rawStringPath = rawStringPath.replace('"', "")
     convertToCSV(r"{s}".format(s=rawStringPath))
     initial_dict = readCSV(
-        r"{s}\output.csv".format(s=os.getcwd()), r"{s}".format(s=rawStringPath)
+        r"{s}/output.csv".format(s=os.getcwd()), r"{s}".format(s=rawStringPath)
     )
     formatCSV(initial_dict)
     filename = "{d}.xlsx".format(d=datetime.datetime.now().strftime("%d-%m-%Y"))
